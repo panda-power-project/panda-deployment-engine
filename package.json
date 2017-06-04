@@ -1,0 +1,41 @@
+{
+  "name": "panda-deployment-engine",
+  "version": "1.0.0",
+  "description": "Deploy a dist folder of a static site to s3 and set it up to be hosted as static hosting.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node -r dotenv/config index.js",
+    "lint": "./node_modules/.bin/eslint index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://umarrasydan@github.com/panda-power-project/panda-deployment-engine.git"
+  },
+  "author": "Umar",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/panda-power-project/panda-deployment-engine/issues"
+  },
+  "homepage": "https://github.com/panda-power-project/panda-deployment-engine#readme",
+  "devDependencies": {
+    "aws-sdk": "^2.62.0",
+    "dotenv": "^4.0.0",
+    "eslint": "^3.19.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-node": "^4.2.2",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-standard": "^3.0.0",
+    "gulp": "^3.9.1",
+    "path": "^0.12.7",
+    "pre-push": "^0.1.1",
+    "readdirp": "^2.1.0",
+    "unirest": "^0.5.1",
+    "yargs": "^8.0.1"
+  },
+  "pre-push": [
+    "lint"
+  ],
+  "dependencies": {
+    "aws-sdk": "^2.51.0"
+  }
+}
