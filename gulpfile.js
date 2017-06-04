@@ -187,6 +187,7 @@ function purgeCloudflareCache (Bucket) {
     request.get(`${CLOUDFLARE_URL}/zones`)
       .headers(CLOUDFLARE_HEADERS)
       .query({
+        name: Bucket,
         status: 'active',
         per_page: 50
       })
