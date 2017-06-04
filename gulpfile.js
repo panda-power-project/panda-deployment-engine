@@ -186,25 +186,33 @@ function purgeCloudflareCache (Bucket) {
   return new Promise((resolve, reject) => {
     request.get(`${CLOUDFLARE_URL}/zones`)
       .headers(CLOUDFLARE_HEADERS)
+      .query({
+        status: 'active',
+        per_page: 50
+      })
       .end(zonesRes => {
         if (zonesRes.error) {
           Console.log('get zones ERR', zonesRes.error)
         }
         const zones = zonesRes.body.result
         const identifier = zones.find(z => z.name === Bucket).id
-        request.delete(`${CLOUDFLARE_URL}/zones/${identifier}/purge_cache`)
-          .headers(Object.assign({
-            'Content-Type': 'application/json',
-          }, CLOUDFLARE_HEADERS))
-          .send({
-            purge_everything: true // eslint-disable-line
-          })
-          .end(purgeRes => {
-            if (purgeRes.error) {
-              return reject(new Error(purgeRes.error))
-            }
-            return resolve(purgeRes.body)
-          })
+        if (identifier) {
+          request.delete(`${CLOUDFLARE_URL}/zones/${identifier}/purge_cache`)
+            .headers(Object.assign({
+              'Content-Type': 'application/json',
+            }, CLOUDFLARE_HEADERS))
+            .send({
+              purge_everything: true // eslint-disable-line
+            })
+            .end(purgeRes => {
+              if (purgeRes.error) {
+                return reject(new Error(purgeRes.error))
+              }
+              return resolve(purgeRes.body)
+            })
+        } else {
+          return resolve('Not found')
+        }
       })
   })
 }
